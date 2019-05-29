@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Board list</h2>
+    <table border="1px">
+        {% if board_list %}
+        {% for post in board_list %}
+            <tr>
+                <th><a href = "{% url 'board:board_detail' post.id %}">{{ post.title }}</a></th>
+                <th>{{ post.author }}</th>
+                <th>{{ post.created_date }}</th>
+                <th>{{ post.viewers }}</th>
+            </tr>
+        {% endfor %}
+        {% else %}
+            <p>There is no Posts How about you write?</p>
+        {% endif %}
+            <p><a href = "{% url 'board:board_edit' %}"></a></p>
+    </table>
+{% endblock content%}

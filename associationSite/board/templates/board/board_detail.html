@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ board.title }}</h1>
+<br>
+<li>
+    Authors :
+    {{ board.author }}
+</li>
+<li>
+    Date :
+    {{ board.created_date }}
+</li>
+<li>
+    Viewer:
+    {{ board.viewers }}
+</li>
+<li>
+    Content:
+    {{ board.content }}
+</li>
+<li>
+    Likes:
+    {{ board.likes }}
+</li>
+
+{% endblock %}

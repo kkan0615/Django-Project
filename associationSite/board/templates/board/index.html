@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Posts are here</h2>
+    <ul>
+        {% for post in board_list %}
+        <li><a herf="{% url 'board:post.id' %}" >{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Board to News</h1>
+{% if board %}
+    <ul>
+        {% for post in board_list %}
+        <li><a href="{% url 'board:board' board.id %}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p> There is no posts </p>
+{% endif %}
+
+{% endblock %}

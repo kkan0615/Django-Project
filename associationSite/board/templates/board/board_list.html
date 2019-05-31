@@ -10,11 +10,14 @@
                 <th>{{ post.author }}</th>
                 <th>{{ post.created_date }}</th>
                 <th>{{ post.viewers }}</th>
+                <th><a href="{% url 'board:board_edit' post.id %}">Edit</a></th>
             </tr>
         {% endfor %}
         {% else %}
             <p>There is no Posts How about you write?</p>
         {% endif %}
-            <p><a href = "{% url 'board:board_edit' %}"></a></p>
+        {% if user.is_authenticated %}
+            <p><a href = "{% url 'board:board_new' %}">Write Post</a></p>
+        {% endif %}
     </table>
 {% endblock content%}

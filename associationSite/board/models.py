@@ -8,17 +8,27 @@ class Board(models.Model):
     content = models.TextField(help_text = 'Post content')
     created_date = models.DateTimeField(default = timezone.now)
     viewers = models.PositiveIntegerField(default = 0)
-    likes = models.ManyToManyField(SiteUser, related_name = 'likes', blank = True)
+    likes = models.ManyToManyField(SiteUser, related_name = 'likes', blank = True, through='Like')
 
     def __str__(self):
         return self.title
 
     # https://wayhome25.github.io/django/2017/03/01/django-99-my-first-project-4/
+    # Count likes
+    @property
     def total_likes(self):
         return self.likes.count()
+
 
 class Comment(models.Model):
     author = models.ForeignKey(SiteUser, on_delete = models.CASCADE)
     post = models.ForeignKey(Board, on_delete = models.CASCADE, related_name='comments')
     content = models.TextField(help_text = 'Conmment content')
     created_date = models.DateField(default = timezone.now)
+
+    class Meta:
+        ordering = ['-id']
+
+class Like(models.Model):
+    post = models.ForeignKey(Board, on_delete = models.CASCADE)
+    user = models.ForeignKey(SiteUser, on_delete = models.CASCADE)

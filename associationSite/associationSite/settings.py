@@ -25,7 +25,7 @@ SECRET_KEY = '$igtwm5+v^27t(wjpx3vw)9$p08l_mw1^e*-16_628svwkm7+4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] # YOU ONLY NEED THIS WHEN YOU OPEN YOUR SITE !
 
 
 # Application definition
@@ -52,6 +52,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'associationSite.urls'
+
+# https://stackoverflow.com/questions/14830669/how-to-expire-django-session-in-5minutes
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 5 * 60 # Only 5 minutes
 
 TEMPLATES = [
     {

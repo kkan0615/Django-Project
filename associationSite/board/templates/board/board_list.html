@@ -20,4 +20,22 @@
             <p><a href = "{% url 'board:board_new' %}">Write Post</a></p>
         {% endif %}
     </table>
+    <!-- https://stackoverflow.com/questions/47996963/that-page-number-is-less-than-1-django -->
+    <!--  -->
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'board:board_list' page_obj.previous_page_number %}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'board:board_list' page_obj.next_page_number %}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+
 {% endblock content%}

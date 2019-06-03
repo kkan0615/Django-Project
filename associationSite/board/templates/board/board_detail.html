@@ -1,7 +1,41 @@
 {% extends "base.html" %}
 
-{% block content %}
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+  $(".like").click(function(){
+    const pk = $(this).attr('name')
+    $.ajax({
+      type: "POST",
+      url: "{% url 'board:board_like' %}",
+      data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      dataType: "json",
+      success: function(response){
+        alert(response.message);
+        $("#count-"+pk).html(response.like_count);
+        const users = $("#like-user-"+pk).text();
+        if(users.indexOf(response.nickname) != -1){
+          $("#like-user-"+pk).text(users.replace(response.nickname, ""));
+        }
+        else{
+          $("#like-user-"+pk).text(response.nickname+users);
+        }
+      },
+      error: function(request, status, error){
+        alert("Login is required")
+        //window.location.replace("/accounts/login/")
+      },
+    });
+  })
+</script>
 
+
+{% block content %}
+<!--https://docs.djangoproject.com/en/2.2/ref/contrib/messages/-->
+{% if messages %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+{% endif %}
 <h1>{{ board.title }}</h1>
 <br>
 <li>
@@ -20,9 +54,22 @@
     Content:
     {{ board.content }}
 </li>
+
 <li>
-    Likes:
-    {{ board.likes }}
+    <form method="POST" action="{% url 'board:comment_new' board_pk=board.id %}">
+        {% csrf_token %}
+        <input type="text" name="content" placeholder="Write your comment">
+        <input type="submit" value="Write">
+    </form>
+    {% for comment in board.comments.all %}
+        <p>Date: {{ comment.created_date }}</p>
+        <p>Authors: {{ comment.author }}</p>
+        <p>Comment: {{ comment.content }}</p>
+        <p><a href="{% url 'board:comment_remove' board_pk=board.id comment_pk=comment.id %}">Delete</a></p>
+    {% empty %}
+        <p>No comments are here</p>
+    {% endfor %}
+
 </li>
 
 {% endblock %}

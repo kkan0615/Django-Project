@@ -5,9 +5,11 @@
 {% if user.is_authenticated %} <!-- Check user's auth -->
     Hello {{ user.nickname }}!
     <p><a href="{% url 'logout' %}">Logout</a></p>
+    <a href = "{% url 'mypage' user.username %}">My page</a>
 {% else %}
     <p>You are not logged in</p>
     <a href = "{% url 'login' %}">Login</a>
     <a href = "{% url 'signup' %}">Sign up</a>
 {% endif %}
+<a href = "{% url 'board:board_list' 0 %}">Board_list</a>
 {% endblock %}

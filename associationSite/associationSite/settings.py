@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig', # Add accounts app
-    'board.apps.BoardConfig'
+    'board.apps.BoardConfig',
+    'hitcount',
 ]
 
 MIDDLEWARE = [

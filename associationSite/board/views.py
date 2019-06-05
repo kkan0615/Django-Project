@@ -6,7 +6,9 @@ from django.utils import timezone # For current time
 from django.contrib import messages # https://docs.djangoproject.com/en/2.2/ref/contrib/messages/
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse # For HttpResponse https://docs.djangoproject.com/en/2.2/ref/request-response/
+from django.http import JsonResponse
 import json # Json foramt
+from hitcount.views import HitCountDetailView
 
 # If it's not class view https://cjh5414.github.io/django-pagination/
 # Pagination https://docs.djangoproject.com/en/1.10/topics/pagination/
@@ -19,8 +21,9 @@ class BoardList(generic.ListView):
 class CommentList(generic.ListView):
     model = Comment
 
-class BoardDetail(generic.DetailView):
+class BoardDetail(HitCountDetailView):
     model = Board
+    count_hit = True
     template_name = 'board/board_detail.html'
     context_object_name = 'board'
 
@@ -80,41 +83,29 @@ def board_remove(request, pk):
     board = get_object_or_404(Board, pk = pk)
     if board.author == request.user:
         board.delete()
-        return redirect('board:board_list')
+        return redirect('board:board_list', page = 0)
 
     else:
         messages.error(request, 'You do not have permission to delete this post')
 
     return redirect('board:board_detail', pk = board.pk)
 
-def comment_remove(request, board_pk, comment_pk):
-    board = get_object_or_404(Board, pk = board_pk)
-    comment = get_object_or_404(Comment, pk = comment_pk)
-    if comment.author != request.user:
-        messages.error(request, 'You are not allowed to delete this comment')
-        return redirect('board:board_detail', pk = board_pk)
-
-    comment.delete()
-    return redirect('board:board_detail', pk = board_pk)
-
-# Through Ajax
-# https://wayhome25.github.io/django/2017/06/25/django-ajax-like-button/
-# https://stackoverflow.com/questions/1941212/correct-way-to-use-get-or-create
-# -----------------IT'S NOT WORKING PLEASE FIX THIS--------------------------- #
-@login_required
-def board_like(request):
+def comment_remove(request):
     if request.method == 'POST':
-        pk = request.POST.get('pk', None)
-        board = get_object_or_404(Board, pk=pk)
-        likes, board_like_created = board.likes.get_or_create(author=request.user)
+        comment_pk = request.POST.get('comment_pk')
+        comment = get_object_or_404(Comment, pk = comment_pk)
 
-        if not board_like_created:
-            likes.delete()
-            message = 'Unlike'
+
+        if comment.author != request.user:
+            message = 'You are not allowed to delete this comment'
 
         else:
-            message = 'Like'
+            comment.delete()
+            message = 'Comment Deleted'
 
-        context = {'like_count:': board.total_likes, 'message': message, 'nickname': request.user.nickname}
-        #Json type
-        return HttpResponse(json.dumps(context), content_type='application/json')
+        response_data = {
+            'message' : message
+        }
+
+        JsonResponse(response_data)
+    #return HttpResponse(json.dumps(response_data), content_type="application/json")

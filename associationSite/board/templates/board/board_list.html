@@ -9,8 +9,6 @@
                 <th><a href = "{% url 'board:board_detail' post.id %}">{{ post.title }}</a></th>
                 <th>{{ post.author }}</th>
                 <th>{{ post.created_date }}</th>
-                <th>{{ post.viewers }}</th>
-                <th><a href="{% url 'board:board_edit' post.id %}">Edit</a></th>
             </tr>
         {% endfor %}
         {% else %}

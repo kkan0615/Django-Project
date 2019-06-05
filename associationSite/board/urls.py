@@ -17,8 +17,6 @@ urlpatterns = [
     path('board/remove/<int:pk>', views.board_remove, name="board_remove"),
     # /board/comment/id/
     path('comment/<int:board_pk>', views.comment_new, name = 'comment_new'),
-    # /board/comment/id/remove/id
-    path('comment/<int:board_pk>/remove/<int:comment_pk>', views.comment_remove, name = 'comment_remove'),
-    # /board/like
-    #path('like/', views.board_like, name='board_like'),
+    # /board/comment/remove/
+    path('comment/remove', views.comment_remove, name = 'comment_remove'),
 ]

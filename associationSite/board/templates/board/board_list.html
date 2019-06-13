@@ -17,6 +17,8 @@
         {% if user.is_authenticated %}
             <p><a href = "{% url 'board:board_new' %}">Write Post</a></p>
         {% endif %}
+        <p><a href = "{% url 'board:board_list' 0 %}">ID</a></p>
+        <p><a href = "?order=title">title</a></p>
     </table>
     <!-- https://stackoverflow.com/questions/47996963/that-page-number-is-less-than-1-django -->
     <!--  -->

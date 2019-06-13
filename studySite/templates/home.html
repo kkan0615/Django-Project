@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Associate home {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %} <!-- Check user's auth -->
+    <p>Hello {{ user.nickname }}!</p>
+{% else %}
+    <p>Hello World</p>
+
+{% endif %}
+{% endblock %}

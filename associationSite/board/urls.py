@@ -7,6 +7,8 @@ urlpatterns = [
     path('', views.BoardList.as_view(), name='index'),
     # /board/board
     path('<int:page>/', views.BoardList.as_view(), name = 'board_list'),
+
+    path('<int:page>/order_date', views.BoardList_order_date.as_view(), name = 'board_list_order_date'),
     # /board/id/
     path('board/<int:pk>/', views.BoardDetail.as_view(), name = 'board_detail'),
     # /board/new/ -> To crate new post

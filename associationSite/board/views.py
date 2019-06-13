@@ -18,6 +18,20 @@ class BoardList(generic.ListView):
     context_object_name = 'board_list'
     paginate_by = 5
 
+    def get_queryset(self):
+        order = self.request.GET.get('order', '-created_date')
+        return Board.objects.order_by(order)
+
+
+class BoardList_order_date(generic.ListView):
+    model = Board
+    template_name = 'board/board_list.html'
+    context_object_name = 'board_list'
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Board.objects.order_by('-created_date')
+
 class CommentList(generic.ListView):
     model = Comment
 

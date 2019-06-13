@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Communites{% endblock %}
+
+{% block content %}
+    {% if community_list %}
+    {% for community in community_list %}
+        <a href="{% url 'community:community_detail' community.url_key %}">{{ community.title }}</a><br>
+    {% endfor %}
+    {% else %}
+        <p>I AM HERE</p>
+    {% endif %}
+    <a href="{% url 'community:create_new_community' %}">Create</a>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Community
+from .models import Community, Post
 import re
 
 # https://micropyramid.com/blog/django-forms-basics/ -Clean
@@ -16,3 +16,8 @@ class CommunityCreateForm(forms.ModelForm):
             raise forms.ValidationError('url_key should not have speical symbols')
 
         return url_key
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('title', 'content')

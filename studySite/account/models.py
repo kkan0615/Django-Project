@@ -6,4 +6,4 @@ class User(AbstractUser):
     introduction = models.TextField(max_length=300, blank=True)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)

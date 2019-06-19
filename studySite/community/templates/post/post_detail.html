@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}{{ community.title }}{% endblock %}
+
+{% block content %}
+    <p>{{ author.nickname }}</p>
+    <p>{{ post.id }}</p>
+    <p>{{ post.title }}</p>
+    <p>{{ post.content }}</p>
+
+    <div class="comment" onload="getComment()">
+            <form id="comment_form" method="POST" action="{% url community:comment_view %}">
+                <textarea name="content" form="comment_form">Enter text here</textarea><br>
+                <button type="submit">submit</button>
+                <button type="reset">reset</button>
+            </form>
+            <table class="comment_list">
+                <thead>
+                    <tr>
+                        <th>nickname</th>
+                        <th>content</th>
+                        <th>Created</th>
+                        <th>수정</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+{% endblock %}
+{% block script %}
+<script>
+    function getComment(id) {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'community:comment_view' %}",
+
+        success: function (response_data) {
+                var comments = response_data.comments
+        },
+
+        error: function(request, status, error){
+                alert('Error checking pk: '+ pk + " " + status + " " + error + " " + request.status + " ")
+        }
+        });
+    }
+
+</script>
+{% endblock %}
+{% endblock %}

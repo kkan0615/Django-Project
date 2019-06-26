@@ -2,13 +2,14 @@
 {% block title %}{{ community.title }}{% endblock %}
 
 {% block content %}
-    <p>{{ author.nickname }}</p>
-    <p>{{ post.id }}</p>
-    <p>{{ post.title }}</p>
-    <p>{{ post.content }}</p>
+    <p>Author : {{ post.author }}</p>
+    <p>PostId: {{ post.id }}</p>
+    <p>Title: {{ post.title }}</p>
+    <p>Content: {{ post.content }}</p>
 
+    <!--
     <div class="comment" onload="getComment()">
-            <form id="comment_form" method="POST" action="{% url community:comment_view %}">
+            <form id="comment_form" method="POST" action="">
                 <textarea name="content" form="comment_form">Enter text here</textarea><br>
                 <button type="submit">submit</button>
                 <button type="reset">reset</button>
@@ -27,9 +28,10 @@
                 </tbody>
             </table>
         </div>
-
+    -->
 {% endblock %}
 {% block script %}
+<!--
 <script>
     function getComment(id) {
         $.ajax({
@@ -46,6 +48,73 @@
         });
     }
 
-</script>
-{% endblock %}
+        function getComment(id) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+                if(xhr.status === 200) {
+                    var comments = JSON.parse(xhr.responseText).comments;
+                    var tbdoy = document.querySelector('#comment_list tbody');
+                    tbody.innerHTML = '';
+                    comments.forEach(comment => {
+                        var row = document.createElement('tr');
+                        var td = document.createElement('td');
+                        td.textContent = comment.user.nickname;
+                        row.appendChild(td);
+                        td = document.createElement('td');
+                        td.textContent = comment.content;
+                        row.appendChild(td);
+                        td = document.createElement('td');
+                        td.textContent = comment.createdAt;
+                        row.appendChild(td);
+                        var edit = document.createElement("button");
+                        edit.textContent = 'edit';
+                        edit.addEventListener('click', function() {
+                            var newComment = prompt('Type for edit');
+                            var xhr = new XMLHttpRequest();
+                            xhr.onload = function() {
+                            if(xhr.status === 200) {
+                                var result = JSON.parse(xhr.responseText).result;
+                                alert(result);
+                                getComment(id);;
+                            } else {
+                                console.error(xhr.responseText);
+                            }
+                        };
+                        xhr.open('PATCH','/comment'+comment.id);
+                        xhr.setRequestHeader('Content-Type','application/json');
+                        xhr.send(JSON.stringify({comment: newComment}));
+                        });
+                        var remove = document.createElement('button');
+                        remove.textContent = '삭제';
+                        remove.addEventListener('click', function () { // 삭제 클릭 시
+                        var xhr = new XMLHttpRequest();
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                            var result = JSON.parse(xhr.responseText).result;
+                            alert(result);
+                            getComment(id);
+                            } else {
+                            console.error(xhr.responseText);
+                            }
+                        };
+                        xhr.open('DELETE', '/comments/' + comment.id);
+                        xhr.send();
+                        });
+                        td = document.createElement('td');
+                        td.appendChild(edit);
+                        row.appendChild(td);
+                        td = document.createElement('td');
+                        td.appendChild(remove);
+                        row.appendChild(td);
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    console.error(xhr.responseText);
+                }
+            }
+            xhr.open('GET','/comment'+id);
+            xhr.send();
+        }
+    </script>
+-->
 {% endblock %}

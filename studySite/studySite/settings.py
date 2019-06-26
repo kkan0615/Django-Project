@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account.apps.AccountConfig',
     'community.apps.CommunityConfig',
+    'program.apps.ProgramConfig',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,6 @@ AUTH_USER_MODEL = 'account.User'
 
 LOGIN_REDIRECT_URL = 'home' # Redirect to index after login
 LOGOUT_REDIRECT_URL = 'home' # Redirect to index after logout
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

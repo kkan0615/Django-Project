@@ -10,14 +10,39 @@
 </head>
 <body>
     <main>
-        <div class="sidenav">
-            {% if not user.is_authenticated %}
-                <a href="{% url 'account:signup' %}">Register</a>
-                <a href="{% url 'login' %}">Login</a>
-            {% else %}
-                <a href="{% url 'logout' %}">Logout</a>
-            {% endif %}
+        <div class="header">
+            <h1>WELCOME TO DJANG!</h1>
+        </div>
+        <div class="navbar">
+            <a href="/">main</a>
             <a href="{% url 'community:index' %}">커뮤니티</a>
+            <a href="">최신글</a>
+            <a href="{% url 'program:index' %}">강의</a>
+            {% if user.is_authenticated %}
+                <div class="dropdown" style="float:right">
+                    <button class="dropbtn" >{{ user.nickname }}
+                    <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                    <a href="{% url 'logout' %}">Logout</a>
+                    <a href="">내정보</a>
+                    </div>
+                </div>
+            {% else %}
+                    <div class="dropdown" style="float:right">
+                    <button class="dropbtn">Human
+                    <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                    <a href="{% url 'account:signup' %}">회원가입</a>
+                    <a href="{% url 'login' %}">Login</a>
+                    </div>
+                </div>
+            {% endif %}
+            {% block navbar %}
+            {% endblock %}
+        </div>
+        <div class="sidevar">
             {% block sidevar %}
             {% endblock %}
         </div>
@@ -26,5 +51,7 @@
             {% endblock %}
         </div>
     </main>
+    {% block body %}
+    {% endblock %}
 </body>
 </html>

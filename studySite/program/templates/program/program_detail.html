@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}{{ program.title }}{% endblock %}
+
+{% block content %}
+    <h1>Author: {{ program.author.nickname }}</h1>
+    <table border="1">
+        <tr>
+            <td>title</td>
+        </tr>
+        {% for subject in subjects %}
+            <tr>
+                <td><a href="#">{{ subject.title }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% if community.manager == user %}
+        <a href="#">Chapter 생성</a>
+    {% endif %}
+{% endblock %}

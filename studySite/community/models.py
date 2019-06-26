@@ -12,7 +12,7 @@ class Community(models.Model):
     created_date = models.DateField(default = timezone.now)
 
     def __str__(self):
-        return str(self.title)
+        return self.title
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)

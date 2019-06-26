@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Program List{% endblock %}
+
+{% block sidevar %}
+    <a href="{% url 'program:program_create' %}">강의생성</a>
+{% endblock %}
+
+{% block content %}
+    <div class="seventy">
+        <h5>Program</h5>
+        <table border="1">
+            <tr>
+                <td>title</td>
+            </tr>
+            {% for program in programs %}
+                <tr>
+                    <td><a href="{% url 'program:program_detail' program.url_key %}">{{ program.title }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="twenty">
+            <h5>Codes</h5>
+            <table border="1">
+                <tr>
+                    <td>title</td>
+                </tr>
+                {% for code in codes %}
+                    <tr>
+                        <td><a href="?code={{ code.name }}">{{ code.name }}</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

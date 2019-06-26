@@ -51,7 +51,6 @@ def CommunityDetail(request, url_key):
         return render(request, 'community/community_detail.html', {
             'community': community,
             'posts': posts,
-            'Manager': manager
         })
 
 def PostDetail(request, pk):
@@ -78,7 +77,6 @@ def CreateNewCommunity(request):
             community.created_date = timezone.now()
             community.save()
             return redirect('community:community_detail', url_key=community.url_key)
-
         else:
             return render(request, 'community/community_create.html', { 'form': form  })
 

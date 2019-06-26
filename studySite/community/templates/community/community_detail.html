@@ -3,7 +3,7 @@
 
 {% block content %}
     <p>{{ community.url_key }}</p>
-    <p>Manager: {{ Manager.nickname }}</p>
+    <p>Manager: {{ community.manager.nickname }}</p>
     <table border="1">
         <tr>
             <td>title</td>
@@ -38,4 +38,7 @@
     </ul>
 {% endif %}
     <a href="{% url 'community:post_write' community.url_key %}">글쓰러가기</a>
+    {% if community.manager == user %}
+        <p>hi</p>
+    {% endif %}
 {% endblock %}

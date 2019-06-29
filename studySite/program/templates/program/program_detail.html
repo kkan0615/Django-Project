@@ -7,13 +7,19 @@
         <tr>
             <td>title</td>
         </tr>
-        {% for subject in subjects %}
+        {% for chapter in chapters %}
             <tr>
-                <td><a href="#">{{ subject.title }}</a></td>
-            </tr>
+                <td>{{ chapter.title }}</td>
+            {% for subject in subjects %}
+                <tr>
+                    <td><a href="#">{{ subject.title }}</a></td>
+                </tr>
+            {% endfor %}
+            <td><a href="{% url 'program:subject_create' program.url_key chapter.pk %}">글쓰기</a></td>
         {% endfor %}
+            </tr>
     </table>
-    {% if community.manager == user %}
-        <a href="#">Chapter 생성</a>
+    {% if program.author == user %}
+        <a href="{% url 'program:chapter_create' program.url_key %}">Chapter 생성</a>
     {% endif %}
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Code, Program, subject, subject_comment, Chapter
+from .models import Code, Program, Subject, Subject_comment, Chapter
 
 # Register your models here.
 
@@ -15,11 +15,11 @@ class ChpaterAdmin(admin.ModelAdmin):
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ['id', 'title']
 
-class subject_commentAdmin(admin.ModelAdmin):
+class Subject_commentAdmin(admin.ModelAdmin):
     list_display = ['id']
 
 admin.site.register(Code)
 admin.site.register(Program)
 admin.site.register(Chapter)
-admin.site.register(subject)
-admin.site.register(subject_comment)
+admin.site.register(Subject)
+admin.site.register(Subject_comment)

@@ -19,7 +19,7 @@ class Program(models.Model):
     update_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
 class Chapter(models.Model):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
@@ -28,9 +28,10 @@ class Chapter(models.Model):
     created_date = models.DateField(default = timezone.now)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
-class subject(models.Model):
+class Subject(models.Model):
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)
     content = models.TextField(max_length=200)
@@ -38,12 +39,13 @@ class subject(models.Model):
     edit_date = models.DateField(blank=True)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
-class subject_comment(models.Model):
-    subject = models.ForeignKey(Program, on_delete=models.CASCADE)
+class Subject_comment(models.Model):
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(max_length=200)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)

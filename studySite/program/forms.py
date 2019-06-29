@@ -1,5 +1,5 @@
 from django import forms
-from .models import Program, subject, Chapter
+from .models import Program, Subject, Chapter
 import re
 
 # https://micropyramid.com/blog/django-forms-basics/ -Clean
@@ -19,7 +19,7 @@ class ProgramCreateForm(forms.ModelForm):
 
 class SubjectForm(forms.ModelForm):
     class Meta:
-        model = subject
+        model = Subject
         fields = ('title', 'content')
 
 class ChapterForm(forms.ModelForm):
